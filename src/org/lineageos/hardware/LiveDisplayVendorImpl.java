@@ -22,10 +22,14 @@ import android.util.Range;
 import lineageos.hardware.DisplayMode;
 import lineageos.hardware.HSIC;
 
+import vendor.lineage.livedisplay.V1_0.IColor;
+
 /**
  * This class loads an implementation of the LiveDisplay native interface.
  */
 public class LiveDisplayVendorImpl {
+
+    IColor server = IColor.getService();
 
     public static final String TAG = "LiveDisplayVendorImpl";
 

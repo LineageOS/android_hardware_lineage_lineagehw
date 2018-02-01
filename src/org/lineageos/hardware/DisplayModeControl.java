@@ -20,6 +20,8 @@ import android.util.Log;
 
 import lineageos.hardware.DisplayMode;
 
+import vendor.lineage.livedisplay.V1_0.IColor;
+
 /*
  * Display Modes API
  *
@@ -33,6 +35,8 @@ import lineageos.hardware.DisplayMode;
  */
 
 public class DisplayModeControl {
+
+    private static IColor vendorImpl = IColor.getService();
 
     private static final boolean sHasNativeSupport =
             LiveDisplayVendorImpl.hasNativeFeature(LiveDisplayVendorImpl.DISPLAY_MODES);
@@ -56,7 +60,7 @@ public class DisplayModeControl {
         if (!sHasNativeSupport) {
             return new DisplayMode[0];
         }
-        return LiveDisplayVendorImpl.native_getDisplayModes();
+        return vendorImpl.getDisplayModes();
     }
 
     /*
@@ -67,7 +71,7 @@ public class DisplayModeControl {
         if (!sHasNativeSupport) {
             return null;
         }
-        return LiveDisplayVendorImpl.native_getCurrentDisplayMode();
+        return vendorImpl.getActiveDisplayMode();
     }
 
     /*
@@ -80,7 +84,7 @@ public class DisplayModeControl {
         if (!sHasNativeSupport) {
             return false;
         }
-        return LiveDisplayVendorImpl.native_setDisplayMode(mode, makeDefault);
+        return vendorImpl.setActiveDisplayMode(mode, makeDefault);
     }
 
     /*
@@ -91,6 +95,6 @@ public class DisplayModeControl {
         if (!sHasNativeSupport) {
             return null;
         }
-        return LiveDisplayVendorImpl.native_getDefaultDisplayMode();
+        return vendorImpl.getDefaultDisplayMode();
     }
 }
