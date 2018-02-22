@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +17,14 @@
 
 package org.lineageos.hardware;
 
+import android.os.RemoteException;
 import android.util.Log;
 import android.util.Range;
 
 import lineageos.hardware.DisplayMode;
 import lineageos.hardware.HSIC;
+
+import vendor.lineage.livedisplay.V1_0.IColor;
 
 /**
  * This class loads an implementation of the LiveDisplay native interface.
@@ -35,54 +39,218 @@ public class LiveDisplayVendorImpl {
     public static final int ADAPTIVE_BACKLIGHT = 0x8;
     public static final int PICTURE_ADJUSTMENT = 0x10;
 
-    private static boolean sNativeLibraryLoaded;
-    private static int     sFeatures;
+    private static int sFeatures;
 
     static {
         try {
-            System.loadLibrary("jni_livedisplay");
-
-            final int features = native_getSupportedFeatures();
-            if (features > 0) {
-                Log.i(TAG, "Using native LiveDisplay backend (features: " + features + ")");
+            sFeatures = IColor.getService().getSupportedFeatures();
+            if (sFeatures > 0) {
+                Log.i(TAG, "Using LiveDisplay backend (features: " + sFeatures + ")");
             }
-
-            sNativeLibraryLoaded = features > 0;
-            sFeatures = features;
-        } catch (Throwable t) {
-            sNativeLibraryLoaded = false;
-            sFeatures = 0;
+        } catch (RemoteException e) {
+            Log.e(TAG, "IColor.getService exception: " + e);
+            reset();
         }
     }
 
-    public static boolean hasNativeFeature(int feature) {
-        return sNativeLibraryLoaded && ((sFeatures & feature) != 0);
+    private static void reset() {
+        sFeatures = 0;
     }
 
-    private static native int native_getSupportedFeatures();
+    public static boolean hasNativeFeature(int feature) {
+        Log.d(TAG, "hasNativeFeature: sFeatures=" + Integer.toString(sFeatures));
+        return (sFeatures & feature) != 0;
+    }
 
-    public static native DisplayMode[] native_getDisplayModes();
-    public static native DisplayMode native_getCurrentDisplayMode();
-    public static native DisplayMode native_getDefaultDisplayMode();
-    public static native boolean native_setDisplayMode(DisplayMode mode, boolean makeDefault);
+    public static DisplayMode[] native_getDisplayModes() {
+        try {
+            return Utils.HIDLModeListToArray(IColor.getService().getDisplayModes());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
 
-    public static native boolean native_setAdaptiveBacklightEnabled(boolean enabled);
-    public static native boolean native_isAdaptiveBacklightEnabled();
+    public static DisplayMode native_getCurrentDisplayMode() {
+        try {
+            DisplayMode mode = Utils.fromHIDLMode(IColor.getService().getCurrentDisplayMode());
+            return mode.id == -1 ? null : mode;
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
 
-    public static native boolean native_setOutdoorModeEnabled(boolean enabled);
-    public static native boolean native_isOutdoorModeEnabled();
+    public static DisplayMode native_getDefaultDisplayMode() {
+        try {
+            DisplayMode mode = Utils.fromHIDLMode(IColor.getService().getDefaultDisplayMode());
+            return mode.id == -1 ? null : mode;
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
 
-    public static native Range<Integer> native_getColorBalanceRange();
-    public static native int native_getColorBalance();
-    public static native boolean native_setColorBalance(int value);
+    public static boolean native_setDisplayMode(DisplayMode mode, boolean makeDefault) {
+        try {
+            return IColor.getService().setDisplayMode(mode.id, makeDefault);
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return false;
+        }
+    }
 
-    public static native boolean native_setPictureAdjustment(final HSIC hsic);
-    public static native HSIC native_getPictureAdjustment();
-    public static native HSIC native_getDefaultPictureAdjustment();
+    public static boolean native_setAdaptiveBacklightEnabled(boolean enabled) {
+        try {
+            return IColor.getService().setAdaptiveBacklightEnabled(enabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return false;
+        }
+    }
 
-    public static native Range<Float> native_getHueRange();
-    public static native Range<Float> native_getSaturationRange();
-    public static native Range<Float> native_getIntensityRange();
-    public static native Range<Float> native_getContrastRange();
-    public static native Range<Float> native_getSaturationThresholdRange();
+    public static boolean native_isAdaptiveBacklightEnabled() {
+        try {
+            return IColor.getService().isAdaptiveBacklightEnabled();
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return false;
+        }
+    }
+
+    public static boolean native_setOutdoorModeEnabled(boolean enabled) {
+        try {
+            return IColor.getService().setOutdoorModeEnabled(enabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return false;
+        }
+    }
+
+    public static boolean native_isOutdoorModeEnabled() {
+        try {
+            return IColor.getService().isOutdoorModeEnabled();
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return false;
+        }
+    }
+
+    public static Range<Integer> native_getColorBalanceRange() {
+        try {
+            return Utils.fromHIDLRange(IColor.getService().getColorBalanceRange());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
+
+    public static int native_getColorBalance() {
+        try {
+            return IColor.getService().getColorBalance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return 0;
+        }
+    }
+
+    public static boolean native_setColorBalance(int value) {
+        try {
+            return IColor.getService().setColorBalance(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return false;
+        }
+    }
+
+    public static boolean native_setPictureAdjustment(final HSIC hsic) {
+        try {
+            return IColor.getService().setPictureAdjustment(Utils.toHIDLHSIC(hsic));
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return false;
+        }
+    }
+
+    public static HSIC native_getPictureAdjustment() {
+        try {
+            return Utils.fromHIDLHSIC(IColor.getService().getPictureAdjustment());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
+
+    public static HSIC native_getDefaultPictureAdjustment() {
+        try {
+            return Utils.fromHIDLHSIC(IColor.getService().getDefaultPictureAdjustment());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
+
+    public static Range<Float> native_getHueRange() {
+        try {
+            return Utils.fromHIDLIntRange(IColor.getService().getHueRange());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
+
+    public static Range<Float> native_getSaturationRange() {
+        try {
+            return Utils.fromHIDLRange(IColor.getService().getSaturationRange());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
+
+    public static Range<Float> native_getIntensityRange() {
+        try {
+            return Utils.fromHIDLRange(IColor.getService().getIntensityRange());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
+
+    public static Range<Float> native_getContrastRange() {
+        try {
+            return Utils.fromHIDLRange(IColor.getService().getContrastRange());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
+
+    public static Range<Float> native_getSaturationThresholdRange() {
+        try {
+            return Utils.fromHIDLRange(IColor.getService().getSaturationThresholdRange());
+        } catch (Exception e) {
+            e.printStackTrace();
+            reset();
+            return null;
+        }
+    }
 }
