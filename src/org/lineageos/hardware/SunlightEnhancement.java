@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +17,9 @@
 
 package org.lineageos.hardware;
 
-import org.lineageos.internal.util.FileUtils;
-
 import android.util.Log;
+import org.lineageos.internal.util.FileUtils;
+import vendor.lineage.livedisplay.V1_0.Feature;
 
 /**
  * Facemelt mode!
@@ -33,8 +34,7 @@ public class SunlightEnhancement {
     private static final String FILE_HBM = "/sys/class/graphics/fb0/hbm";
     private static final String FILE_SRE = "/sys/class/graphics/fb0/sre";
 
-    private static final boolean sHasNativeSupport =
-            LiveDisplayVendorImpl.hasNativeFeature(LiveDisplayVendorImpl.OUTDOOR_MODE);
+    private static final boolean sHasNativeSupport = LiveDisplayVendorImpl.hasNativeFeature(Feature.OUTDOOR_MODE);
 
     private static String getFacemeltPath() {
         if (FileUtils.fileExists(FILE_HBM)) {

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +18,8 @@
 package org.lineageos.hardware;
 
 import android.util.Log;
-
 import lineageos.hardware.DisplayMode;
+import vendor.lineage.livedisplay.V1_0.Feature;
 
 /*
  * Display Modes API
@@ -34,8 +35,7 @@ import lineageos.hardware.DisplayMode;
 
 public class DisplayModeControl {
 
-    private static final boolean sHasNativeSupport =
-            LiveDisplayVendorImpl.hasNativeFeature(LiveDisplayVendorImpl.DISPLAY_MODES);
+    private static final boolean sHasNativeSupport = LiveDisplayVendorImpl.hasNativeFeature(Feature.DISPLAY_MODES);
 
     /*
      * All HAF classes should export this boolean.
