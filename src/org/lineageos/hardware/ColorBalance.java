@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +17,8 @@
 
 package org.lineageos.hardware;
 
+import vendor.lineage.livedisplay.V1_0.Feature;
+
 /**
  * Color balance support
  *
@@ -27,7 +30,7 @@ package org.lineageos.hardware;
 public class ColorBalance {
 
     private static final boolean sHasNativeSupport =
-            LiveDisplayVendorImpl.hasNativeFeature(LiveDisplayVendorImpl.COLOR_BALANCE);
+            LiveDisplayVendorImpl.hasNativeFeature(Feature.COLOR_BALANCE);
 
     /**
      * Whether device supports color balance control

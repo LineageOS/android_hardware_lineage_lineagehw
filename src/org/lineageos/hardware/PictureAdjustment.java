@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +20,7 @@ package org.lineageos.hardware;
 import android.util.Range;
 
 import lineageos.hardware.HSIC;
+import vendor.lineage.livedisplay.V1_0.Feature;
 
 /**
  * Picture adjustment support
@@ -29,7 +31,7 @@ import lineageos.hardware.HSIC;
 public class PictureAdjustment {
 
     private static final boolean sHasNativeSupport =
-            LiveDisplayVendorImpl.hasNativeFeature(LiveDisplayVendorImpl.PICTURE_ADJUSTMENT);
+            LiveDisplayVendorImpl.hasNativeFeature(Feature.PICTURE_ADJUSTMENT);
 
     /**
      * Whether device supports picture adjustment
