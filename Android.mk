@@ -44,7 +44,10 @@ LOCAL_SRC_FILES += $(default_classes) $(unique_specific_classes)
 
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := org.lineageos.hardware
-LOCAL_JAVA_LIBRARIES := org.lineageos.platform.internal services
+LOCAL_JAVA_LIBRARIES := \
+    org.lineageos.platform.internal \
+    vendor.lineage.livedisplay-V1.0-java \
+    services
 
 include $(BUILD_JAVA_LIBRARY)
 
