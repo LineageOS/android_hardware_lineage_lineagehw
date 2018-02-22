@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +17,8 @@
 
 package org.lineageos.hardware;
 
+import vendor.lineage.livedisplay.V1_0.Feature;
+
 /**
  * Color balance support
  *
@@ -27,7 +30,7 @@ package org.lineageos.hardware;
 public class ColorBalance {
 
     private static final boolean sHasNativeSupport =
-            LiveDisplayVendorImpl.hasNativeFeature(LiveDisplayVendorImpl.COLOR_BALANCE);
+            LiveDisplayVendorImpl.getInstance().hasNativeFeature(Feature.COLOR_BALANCE);
 
     /**
      * Whether device supports color balance control
@@ -46,7 +49,7 @@ public class ColorBalance {
      */
     public static int getValue() {
         if (sHasNativeSupport) {
-            return LiveDisplayVendorImpl.native_getColorBalance();
+            return LiveDisplayVendorImpl.getInstance().native_getColorBalance();
         }
         return 0;
     }
@@ -60,7 +63,7 @@ public class ColorBalance {
      */
     public static boolean setValue(int value) {
         if (sHasNativeSupport) {
-            return LiveDisplayVendorImpl.native_setColorBalance(value);
+            return LiveDisplayVendorImpl.getInstance().native_setColorBalance(value);
         }
         return false;
     }
@@ -71,7 +74,7 @@ public class ColorBalance {
      */
     public static int getMinValue() {
         if (sHasNativeSupport) {
-            return LiveDisplayVendorImpl.native_getColorBalanceRange().getLower();
+            return LiveDisplayVendorImpl.getInstance().native_getColorBalanceRange().getLower();
         }
         return 0;
     }
@@ -82,7 +85,7 @@ public class ColorBalance {
      */
     public static int getMaxValue() {
         if (sHasNativeSupport) {
-            return LiveDisplayVendorImpl.native_getColorBalanceRange().getUpper();
+            return LiveDisplayVendorImpl.getInstance().native_getColorBalanceRange().getUpper();
         }
         return 0;
     }
