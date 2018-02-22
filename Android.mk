@@ -1,5 +1,5 @@
 # Copyright (C) 2013 The CyanogenMod Project
-# Copyright (C) 2017 The LineageOS Project
+# Copyright (C) 2017-2018 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,7 +44,10 @@ LOCAL_SRC_FILES += $(default_classes) $(unique_specific_classes)
 
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := org.lineageos.hardware
-LOCAL_JAVA_LIBRARIES := org.lineageos.platform.internal services
+LOCAL_JAVA_LIBRARIES := \
+    org.lineageos.platform.internal \
+    services \
+    vendor.lineage.livedisplay-V1.0-java
 
 include $(BUILD_JAVA_LIBRARY)
 
