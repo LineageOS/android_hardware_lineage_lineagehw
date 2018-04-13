@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8547b74_a9ed0bfc",
+        "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2018-04-13T07:57:50Z",
+      "side": 1,
+      "message": "Is it necessary to wrap this for thread safety?",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 22
+      },
+      "revId": "4e1a7a91720d27e250a1a0e21f4222ef039d3bf4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
