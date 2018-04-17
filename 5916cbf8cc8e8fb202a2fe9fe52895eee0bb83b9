@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "710e6c9b_bf4be1bd",
+        "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-17T00:35:16Z",
+      "side": 1,
+      "message": "It seems like you could have just made all of LiveDisplayVendorImpl static instead.",
+      "parentUuid": "4ea8eff7_80e71791",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "5916cbf8cc8e8fb202a2fe9fe52895eee0bb83b9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b977c892_dafc21ef",
         "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
         "patchSetId": 11
@@ -94,6 +118,29 @@
     },
     {
       "key": {
+        "uuid": "de6a5ddd_cb20a649",
+        "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-17T00:35:16Z",
+      "side": 1,
+      "message": "It\u0027s actually possible for daemon to be null at the point of any calls, but handling that seems to be ridiculous, which leads me to the below comment about RemoteException.",
+      "range": {
+        "startLine": 92,
+        "startChar": 28,
+        "endLine": 92,
+        "endChar": 58
+      },
+      "revId": "5916cbf8cc8e8fb202a2fe9fe52895eee0bb83b9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133a8272_f69f9432",
         "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
         "patchSetId": 11
@@ -110,6 +157,29 @@
         "startChar": 16,
         "endLine": 93,
         "endChar": 36
+      },
+      "revId": "5916cbf8cc8e8fb202a2fe9fe52895eee0bb83b9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfc460ca_414587b2",
+        "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-17T00:35:16Z",
+      "side": 1,
+      "message": "Is RemoteException sufficient? I don\u0027t know if hwbinder calls are subject to the same weird exception passing issues regular binder was. Formerly, binder could throw exceptions other than RemoteException, despite the fact it did not say anywhere in documentation it would.\n\nA lot of code would get around that by wrapping any binder call in try/catch (Exception e).",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 41
       },
       "revId": "5916cbf8cc8e8fb202a2fe9fe52895eee0bb83b9",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
