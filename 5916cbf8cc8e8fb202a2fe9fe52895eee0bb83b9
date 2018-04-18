@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "cd399531_818bcb35",
+        "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-18T04:55:29Z",
+      "side": 1,
+      "message": "I don\u0027t think you really get any thread safety from having a singleton, if anything it makes it worse. The point about linkToDeath is valid, but IMO having to deal with a singleton makes it all the more difficult to work with the death recipient\u0027s lifecycle.",
+      "parentUuid": "9cd02e4b_f90d4953",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "5916cbf8cc8e8fb202a2fe9fe52895eee0bb83b9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b977c892_dafc21ef",
         "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
         "patchSetId": 11
@@ -285,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "7b4e2c0e_22bab803",
+        "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-18T04:55:29Z",
+      "side": 1,
+      "message": "daemon can get a disconnect after the if check, but before daemon.getSupportedFeatures is called, no?",
+      "parentUuid": "f6f8fb13_c8a30cf9",
+      "range": {
+        "startLine": 92,
+        "startChar": 28,
+        "endLine": 92,
+        "endChar": 58
+      },
+      "revId": "5916cbf8cc8e8fb202a2fe9fe52895eee0bb83b9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133a8272_f69f9432",
         "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
         "patchSetId": 11
@@ -367,6 +415,30 @@
       "side": 1,
       "message": "Google only catch RemoteException in their hwbinder java side implementation.",
       "parentUuid": "dfc460ca_414587b2",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 41
+      },
+      "revId": "5916cbf8cc8e8fb202a2fe9fe52895eee0bb83b9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "149e0017_317fb74b",
+        "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-18T04:55:29Z",
+      "side": 1,
+      "message": "I guess...?",
+      "parentUuid": "bda53481_4b677639",
       "range": {
         "startLine": 96,
         "startChar": 12,
