@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "f10c6495_d5071be9",
+        "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2018-04-18T13:22:58Z",
+      "side": 1,
+      "message": "Having a singleton here is not for thread safety, we don\u0027t want to instance multiple LiveDisplayVendorImpl for each feature class, that\u0027s memory expensive. The best choice is a static class but it can\u0027t deal with hwbinder. My \"thread safety\" means the way to implement a singleton. Comparing with ```if (mInstance \u003d\u003d null) {mInstance \u003d new LiveDisplayVendorImpl();} return mInstance;}``` the separate static class ensures ```mInstance \u003d new LiveDisplayVendorImpl()``` is not accessed by multiple thread at the same time.",
+      "parentUuid": "cd399531_818bcb35",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "5916cbf8cc8e8fb202a2fe9fe52895eee0bb83b9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b977c892_dafc21ef",
         "filename": "src/org/lineageos/hardware/LiveDisplayVendorImpl.java",
         "patchSetId": 11
