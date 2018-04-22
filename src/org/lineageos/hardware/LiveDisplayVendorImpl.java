@@ -55,6 +55,8 @@ public class LiveDisplayVendorImpl {
                 mDaemon = IColor.getService();
             } catch (java.util.NoSuchElementException e) {
                 // Service doesn't exist or cannot be opened. Logged below.
+            } catch (java.lang.ClassNotFoundException e) {
+                Log.w(TAG, "LiveDisplay IColor HIDL not found", e);
             } catch (RemoteException e) {
                 Log.e(TAG, "Failed to get LiveDisplay IColor interface", e);
             }
