@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c95924b0_1f65301f",
+        "filename": "src/org/lineageos/hardware/ReadingEnhancement.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 16208
+      },
+      "writtenOn": "2018-05-22T03:34:58Z",
+      "side": 1,
+      "message": "line length?",
+      "revId": "5ec7a7a532f9fa49ee14a62fcef66f9a10c9e361",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
