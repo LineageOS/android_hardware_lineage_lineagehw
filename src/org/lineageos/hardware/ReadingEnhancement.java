@@ -27,6 +27,7 @@ import com.android.server.LocalServices;
 import com.android.server.display.DisplayTransformManager;
 import static com.android.server.display.DisplayTransformManager.LEVEL_COLOR_MATRIX_GRAYSCALE;
 
+import org.lineageos.hardware.DisplayColorCalibration;
 import org.lineageos.internal.util.FileUtils;
 
 /**
@@ -61,15 +62,10 @@ public class ReadingEnhancement {
              0,      0,      0, 1
     };
 
-    /** Full color matrix and offset */
-    private static final float[] MATRIX_NORMAL = new float[] {
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1
-    };
-
     private static DisplayTransformManager sDTMService;
+
+    private static boolean sEnabled;
+    private static String sRestoreColors;
 
     static {
         // Determine mode of operation.
@@ -86,32 +82,52 @@ public class ReadingEnhancement {
         } else {
             sMode = MODE_UNSUPPORTED;
         }
+
+        sRestoreColors = DisplayColorCalibration.getCurColors();
     }
 
     public static boolean isSupported() {
         return sMode != MODE_UNSUPPORTED;
     }
 
+    public static boolean isEnabled() {
+        return sEnabled;
+    }
+
     public static boolean setGrayscale(boolean state) {
+        sRestoreColors = DisplayColorCalibration.getCurColors();
+        sEnabled = state;
+
+        if (state) {
 /*
-        if (sMode == MODE_SYSFS_RGB) {
-            String grayscale = "54 182 18";
-            String fullColor = "255 255 255";
-            return FileUtils.writeLine(COLOR_FILE, (state ? grayscale : fullColor));
-        } else if (sMode == MODE_HWC2_COLOR_TRANSFORM) {
+            if (sMode == MODE_SYSFS_RGB) {
+                String grayscale = "54 182 18";
+                return FileUtils.writeLine(COLOR_FILE, grayscale);
+            } else
 */
-            if (sDTMService == null) {
-                sDTMService = LocalServices.getService(DisplayTransformManager.class);
-                if (sDTMService == null) {
-                    return false;
+                if (sMode == MODE_HWC2_COLOR_TRANSFORM) {
+                    if (sDTMService == null) {
+                        sDTMService = LocalServices.getService(DisplayTransformManager.class);
+                        if (sDTMService == null) {
+                            return false;
+                        }
+                    }
+                    sDTMService.setColorMatrix(LEVEL_COLOR_MATRIX_READING, MATRIX_GRAYSCALE);
+                    return true;
                 }
-            }
-            sDTMService.setColorMatrix(LEVEL_COLOR_MATRIX_READING, (state ? MATRIX_GRAYSCALE : MATRIX_NORMAL));
-            return true;
-/*
+        } else {
+            return DisplayColorCalibration.setColors(sRestoreColors);
         }
+
         return false;
-*/
+    }
+
+    public static String getRestoreColors() {
+        return sRestoreColors;
+    }
+
+    public static void setRestoreColors(String colors) {
+        sRestoreColors = colors;
     }
 
 }
