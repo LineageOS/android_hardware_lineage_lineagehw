@@ -28,6 +28,7 @@ import com.android.server.LocalServices;
 import com.android.server.display.DisplayTransformManager;
 import static com.android.server.display.DisplayTransformManager.LEVEL_COLOR_MATRIX_NIGHT_DISPLAY;
 
+import org.lineageos.hardware.ReadingEnhancement;
 import org.lineageos.internal.util.FileUtils;
 
 public class DisplayColorCalibration {
@@ -83,6 +84,10 @@ public class DisplayColorCalibration {
     }
 
     public static String getCurColors()  {
+        if (ReadingEnhancement.isEnabled()) {
+            return ReadingEnhancement.getRestoreColors();
+        }
+
         if (sMode == MODE_SYSFS_RGB) {
             return FileUtils.readOneLine(COLOR_FILE);
         }
@@ -92,6 +97,11 @@ public class DisplayColorCalibration {
     }
 
     public static boolean setColors(String colors) {
+        if (ReadingEnhancement.isEnabled()) {
+            ReadingEnhancement.setRestoreColors(colors);
+            return true;
+        }
+
         if (sMode == MODE_SYSFS_RGB) {
             return FileUtils.writeLine(COLOR_FILE, colors);
         } else if (sMode == MODE_HWC2_COLOR_TRANSFORM) {
