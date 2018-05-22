@@ -37,17 +37,13 @@ public class ReadingEnhancement {
 
     private static final String TAG = "ReadingEnhancement";
 
-/*
     private static final String COLOR_FILE = "/sys/class/graphics/fb0/rgb";
-*/
 
     private static final int LEVEL_COLOR_MATRIX_READING = LEVEL_COLOR_MATRIX_GRAYSCALE + 1;
 
     private static final int MODE_UNSUPPORTED          = 0;
     private static final int MODE_HWC2_COLOR_TRANSFORM = 1;
-/*
     private static final int MODE_SYSFS_RGB            = 2;
-*/
 
     private static final int sMode;
 
@@ -62,6 +58,16 @@ public class ReadingEnhancement {
              0,      0,      0, 1
     };
 
+    /**
+     * Gray used for converting RGB to gray-scale
+     */
+    private static final float GRAY = 127f/255f;
+
+    /**
+     * String 'caching' RGB representation of gray-scale
+     */
+    private static final String GRAY_RGB;
+
     private static DisplayTransformManager sDTMService;
 
     private static boolean sEnabled;
@@ -75,15 +81,18 @@ public class ReadingEnhancement {
         if (ActivityThread.currentApplication().getApplicationContext().getResources().getBoolean(
                     com.android.internal.R.bool.config_setColorTransformAccelerated)) {
             sMode = MODE_HWC2_COLOR_TRANSFORM;
-/*
         } else if (FileUtils.isFileWritable(COLOR_FILE)) {
             sMode = MODE_SYSFS_RGB;
-*/
         } else {
             sMode = MODE_UNSUPPORTED;
         }
 
         sRestoreColors = DisplayColorCalibration.getCurColors();
+
+        int max = DisplayColorCalibration.getMaxValue();
+        int min = DisplayColorCalibration.getMinValue();
+        int gray = (GRAY * (max - min)) + min;
+        GRAY_RGB = String.format("%d %d %d", gray, gray, gray);
     }
 
     public static boolean isSupported() {
@@ -99,13 +108,9 @@ public class ReadingEnhancement {
         sEnabled = state;
 
         if (state) {
-/*
             if (sMode == MODE_SYSFS_RGB) {
-                String grayscale = "54 182 18";
-                return FileUtils.writeLine(COLOR_FILE, grayscale);
-            } else
-*/
-                if (sMode == MODE_HWC2_COLOR_TRANSFORM) {
+                return FileUtils.writeLine(COLOR_FILE, GRAY_RGB);
+            } else if (sMode == MODE_HWC2_COLOR_TRANSFORM) {
                     if (sDTMService == null) {
                         sDTMService = LocalServices.getService(DisplayTransformManager.class);
                         if (sDTMService == null) {
