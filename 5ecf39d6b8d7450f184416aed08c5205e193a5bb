@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00bc0728_0d487eb1",
+        "filename": "src/org/lineageos/hardware/ReadingEnhancement.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2018-05-23T01:06:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be inside the HWC2 check.",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 36
+      },
+      "revId": "5ecf39d6b8d7450f184416aed08c5205e193a5bb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
