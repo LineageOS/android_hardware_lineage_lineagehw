@@ -39,7 +39,8 @@ public class ReadingEnhancement {
     private static final int LEVEL_COLOR_MATRIX_READING = LEVEL_COLOR_MATRIX_GRAYSCALE + 1;
 
     private static final int MODE_UNSUPPORTED          = 0;
-    private static final int MODE_HWC2_COLOR_TRANSFORM = 1;
+    private static final int MODE_HWC1_COLOR_TRANSFORM = 1;
+    private static final int MODE_HWC2_COLOR_TRANSFORM = 2;
 
     private static final int sMode;
 
@@ -70,7 +71,7 @@ public class ReadingEnhancement {
                     com.android.internal.R.bool.config_setColorTransformAccelerated)) {
             sMode = MODE_HWC2_COLOR_TRANSFORM;
         } else {
-            sMode = MODE_UNSUPPORTED;
+            sMode = MODE_HWC1_COLOR_TRANSFORM;
         }
     }
 
