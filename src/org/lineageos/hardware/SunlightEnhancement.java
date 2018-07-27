@@ -96,7 +96,9 @@ public class SunlightEnhancement {
         if (sHasNativeSupport) {
             return LiveDisplayVendorImpl.getInstance().setOutdoorModeEnabled(status);
         }
-
+        if (isEnabled() == status) {
+            return true;
+        }
         return FileUtils.writeLine(FACEMELT_PATH, status ? FACEMELT_MODE : "0");
     }
 

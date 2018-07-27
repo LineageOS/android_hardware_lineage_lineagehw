@@ -61,6 +61,9 @@ public class AutoContrast {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
+        if (isEnabled() == status) {
+            return true;
+        }
         return FileUtils.writeLine(FILE_ACO, status ? "1" : "0");
     }
 

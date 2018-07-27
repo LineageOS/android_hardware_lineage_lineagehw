@@ -61,6 +61,9 @@ public class ColorEnhancement {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
+        if (isEnabled() == status) {
+            return true;
+        }
         return FileUtils.writeLine(FILE_CE, status ? "1" : "0");
     }
 }
