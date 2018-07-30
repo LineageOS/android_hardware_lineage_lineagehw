@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee7f33c2_4e4be79a",
+        "filename": "src/org/lineageos/hardware/AdaptiveBacklight.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-07-30T05:22:39Z",
+      "side": 1,
+      "message": "Why is this after sHasNativeSupport?",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "5df9686d52907e557683f2a1fcc22b991826ed39",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
