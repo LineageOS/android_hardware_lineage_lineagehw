@@ -22,6 +22,30 @@
       "revId": "5df9686d52907e557683f2a1fcc22b991826ed39",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3539dac4_5e23cd16",
+        "filename": "src/org/lineageos/hardware/AdaptiveBacklight.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2018-07-30T11:45:21Z",
+      "side": 1,
+      "message": "The kernel livedisplay driver 100% for sure applies the CABC command on panel on by itself. I have no idea if the native implementation does.",
+      "parentUuid": "ee7f33c2_4e4be79a",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "5df9686d52907e557683f2a1fcc22b991826ed39",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
