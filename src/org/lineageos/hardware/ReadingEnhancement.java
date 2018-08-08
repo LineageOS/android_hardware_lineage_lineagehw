@@ -43,6 +43,8 @@ public class ReadingEnhancement {
 
     private static final int sMode;
 
+    private static boolean sEnabled;
+
     /**
      * Matrix and offset used for converting color to grayscale.
      * Copied from com.android.server.accessibility.DisplayAdjustmentUtils.MATRIX_GRAYSCALE
@@ -74,11 +76,33 @@ public class ReadingEnhancement {
         }
     }
 
+    /**
+     * Whether device supports Reader Mode
+     *
+     * @return boolean Supported devices must return always true
+     */
     public static boolean isSupported() {
         return sMode != MODE_UNSUPPORTED;
     }
 
-    public static boolean setGrayscale(boolean state) {
+    /**
+     * This method return the current activation status of Reader Mode
+     *
+     * @return boolean Must be false when Reader Mode is not supported or not activated,
+     * or the operation failed while reading the status; true in any other case.
+     */
+    public static boolean isEnabled() {
+        return sEnabled;
+    }
+
+    /**
+     * This method allows to setup Reader Mode
+     *
+     * @param status The new Reader Mode status
+     * @return boolean Must be false if Reader Mode is not supported or the operation
+     * failed; true in any other case.
+     */
+    public static boolean setEnabled(boolean status) {
         if (sDTMService == null) {
             sDTMService = LocalServices.getService(DisplayTransformManager.class);
             if (sDTMService == null) {
@@ -86,7 +110,8 @@ public class ReadingEnhancement {
             }
         }
         sDTMService.setColorMatrix(LEVEL_COLOR_MATRIX_READING,
-                state ? MATRIX_GRAYSCALE : MATRIX_NORMAL);
+                status ? MATRIX_GRAYSCALE : MATRIX_NORMAL);
+        sEnabled = status;
         return true;
     }
 
