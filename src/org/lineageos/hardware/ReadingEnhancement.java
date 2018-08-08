@@ -21,7 +21,7 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.util.Slog;
+import android.util.Log;
 
 import com.android.server.LocalServices;
 import com.android.server.display.DisplayTransformManager;
@@ -36,10 +36,13 @@ public class ReadingEnhancement {
 
     private static final String TAG = "ReadingEnhancement";
 
+    private static final String FILE_READING = "/sys/class/graphics/fb0/reading_mode";
+
     private static final int LEVEL_COLOR_MATRIX_READING = LEVEL_COLOR_MATRIX_GRAYSCALE + 1;
 
     private static final int MODE_UNSUPPORTED          = 0;
     private static final int MODE_HWC2_COLOR_TRANSFORM = 1;
+    private static final int MODE_SYSFS_READING        = 2;
 
     private static final int sMode;
 
@@ -71,6 +74,8 @@ public class ReadingEnhancement {
         if (ActivityThread.currentApplication().getApplicationContext().getResources().getBoolean(
                     com.android.internal.R.bool.config_setColorTransformAccelerated)) {
             sMode = MODE_HWC2_COLOR_TRANSFORM;
+        } else if (FileUtils.isFileWritable(FILE_READING)) {
+            sMode = MODE_SYSFS_READING;
         } else {
             sMode = MODE_UNSUPPORTED;
         }
@@ -92,6 +97,14 @@ public class ReadingEnhancement {
      * or the operation failed while reading the status; true in any other case.
      */
     public static boolean isEnabled() {
+        if (sMode == MODE_SYSFS_READING) {
+            try {
+                return Integer.parseInt(FileUtils.readOneLine(FILE_READING)) > 0;
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage(), e);
+            }
+        }
+
         return sEnabled;
     }
 
@@ -103,16 +116,21 @@ public class ReadingEnhancement {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        if (sDTMService == null) {
-            sDTMService = LocalServices.getService(DisplayTransformManager.class);
+        if (sMode == MODE_SYSFS_READING) {
+            return FileUtils.writeLine(FILE_READING, status ? "1" : "0");
+        } else if (sMode == MODE_HWC2_COLOR_TRANSFORM) {
             if (sDTMService == null) {
-                return false;
+                sDTMService = LocalServices.getService(DisplayTransformManager.class);
+                if (sDTMService == null) {
+                    return false;
+                }
             }
+            sDTMService.setColorMatrix(LEVEL_COLOR_MATRIX_READING,
+                    status ? MATRIX_GRAYSCALE : MATRIX_NORMAL);
+            sEnabled = status;
+            return true;
         }
-        sDTMService.setColorMatrix(LEVEL_COLOR_MATRIX_READING,
-                status ? MATRIX_GRAYSCALE : MATRIX_NORMAL);
-        sEnabled = status;
-        return true;
+        return false;
     }
 
 }
