@@ -35,7 +35,7 @@ public class ColorEnhancement {
      * @return boolean Supported devices must return always true
      */
     public static boolean isSupported() {
-        return FileUtils.isFileWritable(FILE_CE);
+        return FileUtils.isFileReadable(FILE_CE) && FileUtils.isFileWritable(FILE_CE);
     }
 
     /**

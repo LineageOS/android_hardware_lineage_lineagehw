@@ -74,7 +74,8 @@ public class ReadingEnhancement {
         if (ActivityThread.currentApplication().getApplicationContext().getResources().getBoolean(
                     com.android.internal.R.bool.config_setColorTransformAccelerated)) {
             sMode = MODE_HWC2_COLOR_TRANSFORM;
-        } else if (FileUtils.isFileWritable(FILE_READING)) {
+        } else if (FileUtils.isFileReadable(FILE_READING) &&
+                FileUtils.isFileWritable(FILE_READING)) {
             sMode = MODE_SYSFS_READING;
         } else {
             sMode = MODE_UNSUPPORTED;

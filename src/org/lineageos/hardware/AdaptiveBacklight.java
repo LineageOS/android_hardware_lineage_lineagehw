@@ -45,7 +45,7 @@ public class AdaptiveBacklight {
             return true;
         }
 
-        return FileUtils.isFileWritable(FILE_CABC);
+        return FileUtils.isFileReadable(FILE_CABC) && FileUtils.isFileWritable(FILE_CABC);
     }
 
     /**

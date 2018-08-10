@@ -59,7 +59,8 @@ public class DisplayColorCalibration {
         if (ActivityThread.currentApplication().getApplicationContext().getResources().getBoolean(
                     com.android.internal.R.bool.config_setColorTransformAccelerated)) {
             sMode = MODE_HWC2_COLOR_TRANSFORM;
-        } else if (FileUtils.isFileWritable(COLOR_FILE)) {
+        } else if (FileUtils.isFileReadable(COLOR_FILE) &&
+                FileUtils.isFileWritable(COLOR_FILE)) {
             sMode = MODE_SYSFS_RGB;
         } else {
             sMode = MODE_UNSUPPORTED;
