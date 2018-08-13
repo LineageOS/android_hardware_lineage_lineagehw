@@ -15,6 +15,8 @@
 
 LOCAL_PATH := $(call my-dir)
 
+ifeq (0,1)
+
 include $(CLEAR_VARS)
 
 ifneq ($(BOARD_HARDWARE_CLASS),)
@@ -49,5 +51,6 @@ LOCAL_STATIC_JAVA_LIBRARIES := vendor.lineage.livedisplay-V1.0-java-static
 
 include $(BUILD_JAVA_LIBRARY)
 
-include $(call all-makefiles-under,$(LOCAL_PATH))
+endif
 
+include $(call all-makefiles-under,$(LOCAL_PATH))
