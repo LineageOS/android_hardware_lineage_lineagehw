@@ -16,7 +16,7 @@
 
 package org.lineageos.hardware;
 
-/*
+/**
  * Display gamma calibration
  *
  * Exports methods to get the valid value boundaries, the
@@ -33,60 +33,56 @@ package org.lineageos.hardware;
 
 public class DisplayGammaCalibration {
 
-    /*
+    /**
      * All HAF classes should export this boolean.
      * Real implementations must, of course, return true
      */
+    public static boolean isSupported() {
+       return false;
+    }
 
-    public static boolean isSupported() { return false; }
-
-    /*
+    /**
      * How many RGB triplets does the device export?
      *
      * The most common case here should be 1, but some hardware
      * has multiplier combos
      */
-
     public static int getNumberOfControls() {
         return 0;
     }
 
-    /*
+    /**
      * Set the RGB values to the given input triplet on this control
      * index. Input is expected to consist of a zero-indexed control
      * id, and a string containing 3 values, space-separated, each of
      * those a value between the boundaries set by get(Max|Min)Value
      * (see below), and it's meant to be locally interpreted/used.
      */
-
     public static boolean setGamma(int controlIdx, String gamma) {
         throw new UnsupportedOperationException();
     }
 
-    /*
+    /**
      * What's the control specific maximum integer value
      * we take for a color
      */
-
     public static int getMaxValue(int controlIdx) {
         return -1;
     }
 
-    /*
+    /**
      * What's the control specific minimum integer value
      * we take for a color
      */
-
     public static int getMinValue(int controlIdx) {
         return -1;
     }
 
-    /*
+    /**
      * What's the current RGB triplet for this control?
      * This should return a space-separated set of integers in
      * a string, same format as the input to setColors()
      */
-
     public static String getCurGamma(int controlIdx) {
         return "0 0 0";
     }
