@@ -16,18 +16,10 @@
 
 package org.lineageos.hardware;
 
-import org.lineageos.internal.util.FileUtils;
-
-import android.util.Log;
-
 /**
  * Color enhancement support
  */
 public class ColorEnhancement {
-
-    private static final String TAG = "ColorEnhancement";
-
-    private static final String FILE_CE = "/sys/class/graphics/fb0/color_enhance";
 
     /**
      * Whether device supports an color enhancement technology.
@@ -35,7 +27,7 @@ public class ColorEnhancement {
      * @return boolean Supported devices must return always true
      */
     public static boolean isSupported() {
-        return FileUtils.isFileReadable(FILE_CE) && FileUtils.isFileWritable(FILE_CE);
+        return false;
     }
 
     /**
@@ -45,11 +37,6 @@ public class ColorEnhancement {
      * the operation failed while reading the status; true in any other case.
      */
     public static boolean isEnabled() {
-        try {
-            return Integer.parseInt(FileUtils.readOneLine(FILE_CE)) > 0;
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-        }
         return false;
     }
 
@@ -61,6 +48,6 @@ public class ColorEnhancement {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        return FileUtils.writeLine(FILE_CE, status ? "1" : "0");
+        return false;
     }
 }

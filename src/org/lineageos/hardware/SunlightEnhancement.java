@@ -17,38 +17,10 @@
 
 package org.lineageos.hardware;
 
-import android.util.Log;
-
-import org.lineageos.internal.util.FileUtils;
-
 /**
  * Facemelt mode!
  */
 public class SunlightEnhancement {
-
-    private static final String TAG = "SunlightEnhancement";
-
-    private static final String FACEMELT_PATH = getFacemeltPath();
-    private static final String FACEMELT_MODE = getFacemeltMode();
-
-    private static final String FILE_HBM = "/sys/class/graphics/fb0/hbm";
-    private static final String FILE_SRE = "/sys/class/graphics/fb0/sre";
-
-    private static String getFacemeltPath() {
-        if (FileUtils.fileExists(FILE_HBM)) {
-            return FILE_HBM;
-        } else {
-            return FILE_SRE;
-        }
-    }
-
-    private static String getFacemeltMode() {
-        if (FileUtils.fileExists(FILE_HBM)) {
-            return "1";
-        } else {
-            return "2";
-        }
-    }
 
     /**
      * Whether device supports sunlight enhancement
@@ -56,7 +28,7 @@ public class SunlightEnhancement {
      * @return boolean Supported devices must return always true
      */
     public static boolean isSupported() {
-        return FileUtils.isFileReadable(FACEMELT_PATH) && FileUtils.isFileWritable(FACEMELT_PATH);
+        return false;
     }
 
     /**
@@ -66,7 +38,7 @@ public class SunlightEnhancement {
      * or the operation failed while reading the status; true in any other case.
      */
     public static boolean isEnabled() {
-        return Integer.parseInt(FileUtils.readOneLine(FACEMELT_PATH)) > 0;
+        return false;
     }
 
     /**
@@ -77,7 +49,7 @@ public class SunlightEnhancement {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        return FileUtils.writeLine(FACEMELT_PATH, status ? FACEMELT_MODE : "0");
+        return false;
     }
 
     /**

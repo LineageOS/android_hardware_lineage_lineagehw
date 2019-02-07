@@ -17,19 +17,11 @@
 
 package org.lineageos.hardware;
 
-import android.util.Log;
-
-import org.lineageos.internal.util.FileUtils;
-
 /**
  * Adaptive backlight support (this refers to technologies like NVIDIA SmartDimmer,
  * QCOM CABL or Samsung CABC).
  */
 public class AdaptiveBacklight {
-
-    private static final String TAG = "AdaptiveBacklight";
-
-    private static final String FILE_CABC = "/sys/class/graphics/fb0/cabc";
 
     /**
      * Whether device supports an adaptive backlight technology.
@@ -37,7 +29,7 @@ public class AdaptiveBacklight {
      * @return boolean Supported devices must return always true
      */
     public static boolean isSupported() {
-        return FileUtils.isFileReadable(FILE_CABC) && FileUtils.isFileWritable(FILE_CABC);
+        return false;
     }
 
     /**
@@ -47,7 +39,7 @@ public class AdaptiveBacklight {
      * the operation failed while reading the status; true in any other case.
      */
     public static boolean isEnabled() {
-        return Integer.parseInt(FileUtils.readOneLine(FILE_CABC)) > 0;
+        return false;
     }
 
     /**
@@ -58,6 +50,6 @@ public class AdaptiveBacklight {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        return FileUtils.writeLine(FILE_CABC, status ? "1" : "0");
+        return false;
     }
 }

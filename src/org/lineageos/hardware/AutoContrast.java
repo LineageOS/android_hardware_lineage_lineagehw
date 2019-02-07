@@ -16,18 +16,10 @@
 
 package org.lineageos.hardware;
 
-import org.lineageos.internal.util.FileUtils;
-
-import android.util.Log;
-
 /**
  * Auto Contrast Optimization
  */
 public class AutoContrast {
-
-    private static final String TAG = "AutoContrast";
-
-    private static final String FILE_ACO = "/sys/class/graphics/fb0/aco";
 
     /**
      * Whether device supports ACO
@@ -35,7 +27,7 @@ public class AutoContrast {
      * @return boolean Supported devices must return always true
      */
     public static boolean isSupported() {
-        return FileUtils.isFileReadable(FILE_ACO) && FileUtils.isFileWritable(FILE_ACO);
+        return false;
     }
 
     /**
@@ -45,11 +37,6 @@ public class AutoContrast {
      * the operation failed while reading the status; true in any other case.
      */
     public static boolean isEnabled() {
-        try {
-            return Integer.parseInt(FileUtils.readOneLine(FILE_ACO)) > 0;
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-        }
         return false;
     }
 
@@ -61,7 +48,7 @@ public class AutoContrast {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        return FileUtils.writeLine(FILE_ACO, status ? "1" : "0");
+        return false;
     }
 
     /**
