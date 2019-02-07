@@ -26,7 +26,9 @@ public class HighTouchSensitivity {
      *
      * @return boolean Supported devices must return always true
      */
-    public static boolean isSupported() { return false; }
+    public static boolean isSupported() {
+        return false;
+    }
 
     /**
      * This method return the current activation status of high touch sensitivity
@@ -34,7 +36,9 @@ public class HighTouchSensitivity {
      * @return boolean Must be false if high touch sensitivity is not supported or not activated,
      * or the operation failed while reading the status; true in any other case.
      */
-    public static boolean isEnabled() { return false; }
+    public static boolean isEnabled() {
+        return false;
+    }
 
     /**
      * This method allows to setup high touch sensitivity status.
@@ -43,6 +47,8 @@ public class HighTouchSensitivity {
      * @return boolean Must be false if high touch sensitivity is not supported or the operation
      * failed; true in any other case.
      */
-    public static boolean setEnabled(boolean status) { return false; }
+    public static boolean setEnabled(boolean status) {
+        return false;
+    }
 
 }
